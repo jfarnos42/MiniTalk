@@ -6,13 +6,13 @@
 /*   By: jfarnos- <jfarnos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 03:39:16 by jfarnos-          #+#    #+#             */
-/*   Updated: 2024/10/02 05:40:04 by jfarnos-         ###   ########.fr       */
+/*   Updated: 2024/10/02 13:39:00 by jfarnos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minitalk.h"
 
-volatile sig_atomic_t	confirmed_data = 0;
+volatile sig_atomic_t	g_confirmed_data = 0;
 
 static void	ft_error(char *message)
 {
@@ -36,7 +36,7 @@ int	pid_parser(char *digit)
 void	signal_handler(int signal)
 {
 	if ((signal == SIGUSR1) || (signal == SIGUSR2))
-		confirmed_data = TRUE;
+		g_confirmed_data = TRUE;
 }
 
 void	send_data(pid_t server_pid, char c)
@@ -51,9 +51,9 @@ void	send_data(pid_t server_pid, char c)
 		else
 			kill(server_pid, SIGUSR1);
 		i++;
-		while (!confirmed_data)
+		while (!g_confirmed_data)
 			pause();
-		confirmed_data = FALSE;
+		g_confirmed_data = FALSE;
 	}
 }
 

@@ -8,19 +8,19 @@ RM = rm -rf
 CLIENT_SRC = client.c
 SERVER_SRC = server.c
 
-OBJ_DIR = obj
-CLIENT_OBJ = $(OBJ_DIR)/client.o
-SERVER_OBJ = $(OBJ_DIR)/server.o
+BIN = bin
+CLIENT_OBJ = $(BIN)/client.o
+SERVER_OBJ = $(BIN)/server.o
 
 CLIENT_EXE = client
 SERVER_EXE = server
 ###############
 
 ### MODULES ###
+FT_PRINTF_DIR = ./includes/Libft/modules/ft_printf/
+FT_PRINTF_LIB = $(FT_PRINTF_DIR)libftprintf.a
 LIBFT_DIR =		./includes/Libft/
 LIBFT_LIB =		$(LIBFT_DIR)libft.a
-FT_PRINTF_DIR =	./includes/ft_printf/
-FT_PRINTF_LIB = $(FT_PRINTF_DIR)libftprintf.a
 ###############
 
 ### COLORS ####
@@ -30,7 +30,7 @@ GREEN = \033[0;32m
 END_LINE = \033[0m
 ###############
 
-all: $(LIBFT_LIB) $(FT_PRINTF_LIB) $(CLIENT_EXE) $(SERVER_EXE)
+all: $(LIBFT_LIB) $(CLIENT_EXE) $(SERVER_EXE)
 	@echo
 	@echo	"	███╗   ███╗██╗███╗   ██╗██╗████████╗ █████╗ ██╗     ██╗  ██╗"
 	@echo	"	████╗ ████║██║████╗  ██║██║╚══██╔══╝██╔══██╗██║     ██║ ██╔╝"
@@ -43,18 +43,11 @@ all: $(LIBFT_LIB) $(FT_PRINTF_LIB) $(CLIENT_EXE) $(SERVER_EXE)
 	@echo
 	@echo
 
-$(FT_PRINTF_LIB):
-	@echo "$(YELLOW)Compiling FT_PRINTF...$(END_LINE)"
-	@$(MAKE) -C $(FT_PRINTF_DIR)
-	@echo "$(GREEN)FT_PRINTF successfully compiled.$(END_LINE)"
-
 $(LIBFT_LIB):
-	@echo "$(YELLOW)Compiling LIBFT...$(END_LINE)"
 	@$(MAKE) -C $(LIBFT_DIR)
-	@echo "$(GREEN)LIBFT successfully compiled.$(END_LINE)"
 
 $(CLIENT_EXE): $(CLIENT_OBJ) $(LIBFT_LIB) $(FT_PRINTF_LIB)
-	@echo "$(YELLOW)Compiling client...$(END_LINE)"
+	@echo "$(YELLOW)Compiling Client$(END_LINE)"
 	@${CC} ${CFLAGS} $^ -o $@
 	@echo "$(GREEN)Client successfully compiled.$(END_LINE)"
 
@@ -63,25 +56,22 @@ $(SERVER_EXE): $(SERVER_OBJ) $(LIBFT_LIB) $(FT_PRINTF_LIB)
 	@${CC} ${CFLAGS} $^ -o $@
 	@echo "$(GREEN)Server successfully compiled.$(END_LINE)"
 
-${OBJ_DIR}/%.o: %.c
-	@mkdir -p ${OBJ_DIR}
+${BIN}/%.o: %.c
+	@mkdir -p ${BIN}
 	@${CC} ${CFLAGS} -c $< -o $@
 	@echo
 
 clean:
-	@echo "================================================================"
-	@echo "$(YELLOW)Cleaning FT_PRINTF...$(END_LINE)"
-	@${MAKE} -C $(FT_PRINTF_DIR) fclean
-	@echo "$(GREEN)FT_PRINTF object files removed.$(END_LINE)"
-	@echo "$(YELLOW)Cleaning LIBFT...$(END_LINE)"
+	@echo
 	@${MAKE} -C $(LIBFT_DIR) fclean
-	@echo "$(GREEN)LIBFT object files removed.$(END_LINE)"
-	@echo "$(YELLOW)Cleaning objects and executables...$(END_LINE)"
-	@$(RM) $(OBJ_DIR)
-	@$(RM) $(CLIENT_EXE) $(SERVER_EXE)
+	@$(RM) $(BIN)
+	@$(RM) $(CLIENT_EXE) $(SERVER_EXE) $(LIBFT_LIB)
+	@echo
 	@echo "$(GREEN)Objects and executables successfully removed.$(END_LINE)"
 
 fclean: clean
+
+bonus: re
 
 debug: CFLAGS += $(DEBUG)
 debug: re

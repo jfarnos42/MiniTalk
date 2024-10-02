@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strappend.c                                     :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jfarnos- <jfarnos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/02 03:39:55 by jfarnos-          #+#    #+#             */
-/*   Updated: 2024/10/02 07:05:39 by jfarnos-         ###   ########.fr       */
+/*   Created: 2023/06/05 16:26:16 by jfarnos-          #+#    #+#             */
+/*   Updated: 2023/06/07 19:46:01 by jfarnos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
-char	*ft_strappend(char *chain, char *block)
-{
-	char	*aux;
+# include <stdarg.h>
+# include <stdio.h>
+# include <string.h>
+# include <unistd.h>
 
-	aux = NULL;
-	if (chain)
-	{
-		aux = chain;
-		free(chain);
-		return (ft_strjoin(aux, block));
-	}
-	return (ft_strdup(block));
-}
+int	ft_printf(char const *s, ...);
+int	ft_putchar(int c);
+int	ft_putstr(const char *str);
+int	ft_putnbr(int nb);
+int	ft_putunsigned(unsigned int a);
+int	ft_puthex(unsigned long n, char c);
+
+#endif
