@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "signal.h": "c",
+        "ft_printf.h": "c",
+        "unistd.h": "c"
+    }
+}
