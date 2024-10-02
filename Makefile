@@ -52,7 +52,7 @@ $(CLIENT_EXE): $(CLIENT_OBJ) $(LIBFT_LIB) $(FT_PRINTF_LIB)
 	@echo "$(GREEN)Client successfully compiled.$(END_LINE)"
 
 $(SERVER_EXE): $(SERVER_OBJ) $(LIBFT_LIB) $(FT_PRINTF_LIB)
-	@echo "$(YELLOW)Compiling server...$(END_LINE)"
+	@echo "$(YELLOW)Compiling Server...$(END_LINE)"
 	@${CC} ${CFLAGS} $^ -o $@
 	@echo "$(GREEN)Server successfully compiled.$(END_LINE)"
 
